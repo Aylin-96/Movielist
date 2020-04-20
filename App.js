@@ -1,50 +1,39 @@
 import React, { Component } from 'react'
 import { View, ScrollView, StyleSheet } from 'react-native'
-import { SearchBar } from 'react-native-elements'
 import Header from './components/Header'
 import Poster from './components/Poster'
 
-const url = 'https://gitlab.com/gHashTag/react-native-init-data/raw/master/db.json'
+const url = 'http://api.tvmaze.com/search/shows?q=batman'
 
 export default class App extends Component {
   state = {
     title: 'Welcome',
     data: [],
-    search: ''
   }
 
   componentDidMount = async () => {
+    console.log(url)
     try {
       const response = await fetch(url)
       const data = await response.json()
       this.setState({ data })
+      console.log({data})
     } catch (e) {
       throw e
     }
   }
 
-  updateSearch = search => {
-    this.setState({ search })
-  }
-
   render() {
     const { title, data } = this.state
     const { container } = styles
-    const { search } = this.state
-    console.log(item.show.name)
     return(
       <View>
          <Header title={title} />
-         <SearchBar
-            placeholder="Type here..."
-            onChangeText={this.updateSearch}
-            value={search}
-        />
          <ScrollView>
            <View style={container}>
-             { data.map(item => (
-               <Poster data={item} key={item.id} />
-             ))
+             { data.map(item =>
+               <Poster data={item.show} key={item.show.id} />
+             )
              }
            </View>
          </ScrollView>

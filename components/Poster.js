@@ -7,11 +7,13 @@ const w = win.width
 
 const Poster = ({ data }) => {
     const { container, sub, cover, h1 } = styles
-    const { data, image } = data
+    const { image, name } = data
     return(
         <View style={container}>
             <View style={sub}>
-                <Image style={cover} source={{ uri: image }} />
+                <Image style={cover}>
+                    source={{ uri: image.medium }}
+                </Image>
             </View>
             <Text style={h1}>{name}</Text>
         </View>
